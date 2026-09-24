@@ -30,6 +30,12 @@ The game should feel visually transformative: a player's plot evolves from rusty
 - [Production Roadmap](docs/05-production-roadmap.md)
 - [Analytics, Launch & LiveOps](docs/06-analytics-launch-liveops.md)
 - [V1 Gameplay Specification](docs/07-v1-specification.md)
+- [V1 Alpha Balance](docs/08-v1-balance-alpha.md)
+
+## Balance tooling
+
+- `tools/economy_sim.py` provides a deterministic first-pass economy simulation for world timing, Singularity pacing, and illustrative prestige acceleration.
+- Simulator output is a design check, not a substitute for Roblox playtesting or live analytics.
 
 ## Initial V1 scope
 
