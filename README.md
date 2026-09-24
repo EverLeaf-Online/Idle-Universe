@@ -29,15 +29,17 @@ The game should feel visually transformative: a player's plot evolves from rusty
 - [Monetization](docs/04-monetization.md)
 - [Production Roadmap](docs/05-production-roadmap.md)
 - [Analytics, Launch & LiveOps](docs/06-analytics-launch-liveops.md)
+- [V1 Gameplay Specification](docs/07-v1-specification.md)
 
 ## Initial V1 scope
 
-- 4–5 worlds
-- 8–10 machines
+- 5 worlds: Earth Scrapyard, Lunar Industrial Complex, Mars Foundry, Asteroid Nexus, Solar Forge
+- 10 launch machines
 - Credits, Research, and Singularity Cores
 - Machine upgrades and visual evolution
 - Research tree
 - Singularity prestige system
+- Permanent Core tree
 - Offline progression
 - Quests and achievements
 - Basic social factory visits and leaderboards
