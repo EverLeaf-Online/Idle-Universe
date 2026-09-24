@@ -31,6 +31,7 @@ The game should feel visually transformative: a player's plot evolves from rusty
 - [Analytics, Launch & LiveOps](docs/06-analytics-launch-liveops.md)
 - [V1 Gameplay Specification](docs/07-v1-specification.md)
 - [V1 Alpha Balance](docs/08-v1-balance-alpha.md)
+- [Supplied Place & Asset Integration](docs/09-place-asset-integration.md)
 
 ## Balance tooling
 
