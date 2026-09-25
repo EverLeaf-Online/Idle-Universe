@@ -33,6 +33,30 @@ Validation result:
 
 The lower file size comes primarily from stripping dormant legacy script source and clearing legacy serialized audio references.
 
+## Clean Prototype v2 runtime fix
+
+Studio testing of the first clean build exposed a server runtime error at `IdleUniverseServer:157`:
+
+`The current thread cannot write 'MeshId' (lacking capability NotAccessible)`
+
+Cause: the embedded greybox helper created a `MeshPart` and attempted to assign `MeshPart.MeshId` while the server was running. Roblox does not permit that property write from this runtime context.
+
+`Idle_Universe_Clean_Prototype_v2.rbxl` replaces the runtime mesh helper with `Part + SpecialMesh`:
+
+- no runtime `MeshPart.MeshId` assignments remain,
+- `SpecialMesh.MeshId` is used for the supplied low-poly mesh references,
+- the collision/anchoring properties remain on the parent `Part`,
+- the rest of the prototype economy and UI code is unchanged.
+
+v2 structural validation:
+
+- Roblox binary chunk stream: valid
+- Chunk count: 2,592
+- Embedded `Instance.new("MeshPart")` occurrences: 0
+- Embedded `Instance.new("SpecialMesh")` occurrences in the Idle Universe server runtime: present
+- Output size: approximately 873 KB
+- SHA-256: `7765b419c237acd49416b4d4283bff96af227a354afd35d4a61ba3586c398e15`
+
 ## Expected Studio behavior
 
 The legacy unauthorized sound errors shown by the first prototype should no longer be emitted by the serialized `Sound` objects because their `SoundId` fields are empty.
@@ -45,17 +69,18 @@ is not stored in the place and is unrelated to Idle Universe. That message comes
 
 ## Validation checklist
 
-Open `Idle_Universe_Clean_Prototype.rbxl` and press Play. Verify:
+Open `Idle_Universe_Clean_Prototype_v2.rbxl` and press Play. Verify:
 
-1. no unauthorized legacy sound-load errors appear,
-2. the Idle Universe HUD appears,
-3. Process Scrap increases Credits,
-4. Recycler automation costs 75 Credits,
-5. passive production begins after automation,
-6. Recycler upgrades work,
-7. the Industrial Smelter can be purchased at 500 Credits,
-8. no legacy tycoon shop/rebirth/gear behavior activates,
-9. no unexpected legacy UI appears,
-10. the selected low-poly meshes still load correctly.
+1. the previous `MeshPart.MeshId` capability error does not appear,
+2. no unauthorized legacy sound-load errors appear,
+3. the Idle Universe HUD appears,
+4. Process Scrap increases Credits,
+5. Recycler automation costs 75 Credits,
+6. passive production begins after automation,
+7. Recycler upgrades work,
+8. the Industrial Smelter can be purchased at 500 Credits,
+9. no legacy tycoon shop/rebirth/gear behavior activates,
+10. no unexpected legacy UI appears,
+11. the selected low-poly meshes load or, if a mesh asset has a separate permission problem, gameplay continues without a server-script crash.
 
 If this gate passes, the next engineering step is to stop depending on the embedded greybox runtime and move the tested loop onto the repository's modular server-authoritative services and persistence layer.
